@@ -13,8 +13,20 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "DoNest.helloWorld",
-      "title": "Hello World"
+      "command": "DoNest.addTodo",
+      "title": "DoNest:Add Todo"
+    },{
+      "command": "DoNest.ShowTodos",
+      "title": "DoNest:Show Todos"
+    },{
+      "command": "DoNest.removeTodos",
+      "title": "DoNest:Remove Todos"
+    },{
+      "command": "DoNest.markTodoAsDone",
+      "title": "DoNest:Mark Todo as Done"
+    },{
+      "command": "DoNest.markTodoAsUndone",
+      "title": "DoNest:Mark Todo as Undone"
     }]
   },
   "scripts": {

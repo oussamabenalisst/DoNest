@@ -4,14 +4,23 @@ const vscode = require("vscode");
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-  const disposable = vscode.commands.registerCommand(
-    "DoNest.helloWorld",
-    function () {
-      vscode.window.showInformationMessage(
-        "Hello World from Extension-Vscode!"
-      );
+  let disposable = vscode.commands.registerCommand(
+    "DoNest.addTodo",
+    async () => {
+      const task = await vscode.window.showInputBox({
+        prompt: "Enter your task",
+      });
+      if (task) {
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+          editor.edit((editBuilder) => {
+            editBuilder.insert(editor.selection.active, `- [ ] ${task}\n`);
+          });
+        }
+      }
     }
   );
+
   context.subscriptions.push(disposable);
 }
 
