@@ -14,19 +14,19 @@
   "contributes": {
     "commands": [{
       "command": "DoNest.addTodo",
-      "title": "DoNest:Add Todo"
+      "title": "DoNest: Add Todo"
     },{
       "command": "DoNest.ShowTodos",
-      "title": "DoNest:Show Todos"
+      "title": "DoNest: Show Todos"
     },{
       "command": "DoNest.removeTodos",
-      "title": "DoNest:Remove Todos"
+      "title": "DoNest:  Remove Todos"
     },{
       "command": "DoNest.markTodoAsDone",
-      "title": "DoNest:Mark Todo as Done"
+      "title": "DoNest: Mark Todo as Done"
     },{
       "command": "DoNest.markTodoAsUndone",
-      "title": "DoNest:Mark Todo as Undone"
+      "title": "DoNest: Mark Todo as Undone"
     }]
   },
   "scripts": {
