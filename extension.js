@@ -124,25 +124,33 @@ function activate(context) {
       const todos = context.globalState.get("donestTodos", []);
       if (todos.length > 0) {
         const items = todos.map((todo) =>
-          typeof todo === "string" ? todo : `${todo.task}`
+          typeof todo === "string" ? todo : `${todo.task} (${todo.filePath})`
         );
         const selected = await vscode.window.showQuickPick(items, {
-          placeHolder: "Select a TODO to insert at cursor:",
+          placeHolder: "Select a TODO to open its file:",
         });
         if (selected) {
-          const editor = vscode.window.activeTextEditor;
-          if (editor) {
-            let taskText = selected;
-            const match = selected.match(/^(.*) \((.*)\)$/);
-            if (match) {
-              taskText = match[1];
+          let selectedTodo = todos.find((todo) => {
+            if (typeof todo === "string") {
+              return todo === selected;
+            } else {
+              return `${todo.task} (${todo.filePath})` === selected;
             }
-            editor.edit((editBuilder) => {
-              editBuilder.insert(editor.selection.active, `${taskText}\n`);
-            });
-            vscode.window.showInformationMessage(`Inserted TODO: ${taskText}`);
+          });
+          let filePath = undefined;
+          if (typeof selectedTodo !== "string" && selectedTodo) {
+            filePath = selectedTodo.filePath;
+          }
+          if (filePath) {
+            const doc = await vscode.workspace.openTextDocument(filePath);
+            await vscode.window.showTextDocument(doc, { preview: false });
+            vscode.window.showInformationMessage(
+              `Opened file for TODO: ${selectedTodo.task}`
+            );
           } else {
-            vscode.window.showInformationMessage("No active editor found.");
+            vscode.window.showInformationMessage(
+              "No file path found for this TODO."
+            );
           }
         }
       } else {
