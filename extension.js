@@ -11,15 +11,22 @@ function activate(context) {
         prompt: "Enter your task",
       });
       if (task) {
+        const editor = vscode.window.activeTextEditor;
+        const filePath = editor ? editor.document.uri.fsPath : "";
         const todos = context.globalState.get("donestTodos", []);
-        if (todos.includes(task)) {
-          vscode.window.showWarningMessage("This task already exists.");
+        const exists = todos.some(
+          (todo) => todo.task === task && todo.filePath === filePath
+        );
+        if (exists) {
+          vscode.window.showWarningMessage(
+            "This task already exists for this file."
+          );
           return;
         }
-        todos.push(`${task}`);
+        const todoObj = { task, filePath };
+        todos.push(todoObj);
         vscode.window.showInformationMessage(`Added TODO: ${task}`);
         context.globalState.update("donestTodos", todos);
-        const editor = vscode.window.activeTextEditor;
         if (editor) {
           editor.edit((editBuilder) => {
             editBuilder.insert(editor.selection.active, `${task}\n`);
@@ -36,7 +43,10 @@ function activate(context) {
     async () => {
       const todos = context.globalState.get("donestTodos", []);
       if (todos.length > 0) {
-        vscode.window.showQuickPick(todos, {
+        const items = todos.map((todo) =>
+          typeof todo === "string" ? todo : `${todo.task}`
+        );
+        vscode.window.showQuickPick(items, {
           placeHolder: "Your saved TODOs:",
         });
       } else {
@@ -53,13 +63,22 @@ function activate(context) {
     async () => {
       const todos = context.globalState.get("donestTodos", []);
       if (todos.length > 0) {
-        const selectedTodo = await vscode.window.showQuickPick(todos, {
+        const items = todos.map((todo) =>
+          typeof todo === "string" ? todo : `${todo.task} (${todo.filePath})`
+        );
+        const selected = await vscode.window.showQuickPick(items, {
           placeHolder: "Select a TODO to remove:",
         });
-        if (selectedTodo) {
-          const updatedTodos = todos.filter((todo) => todo !== selectedTodo);
+        if (selected) {
+          const updatedTodos = todos.filter((todo) => {
+            if (typeof todo === "string") {
+              return todo !== selected;
+            } else {
+              return `${todo.task} (${todo.filePath})` !== selected;
+            }
+          });
           context.globalState.update("donestTodos", updatedTodos);
-          vscode.window.showInformationMessage(`Removed TODO: ${selectedTodo}`);
+          vscode.window.showInformationMessage(`Removed TODO: ${selected}`);
         }
       } else {
         vscode.window.showInformationMessage("No TODOs found to remove.");
