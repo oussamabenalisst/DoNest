@@ -86,6 +86,27 @@ function activate(context) {
     }
   );
   context.subscriptions.push(removeTodosDisposable);
+  let clearTodosDisposable = vscode.commands.registerCommand(
+    "DoNest.ClearTodos",
+    async () => {
+      const todos = context.globalState.get("donestTodos", []);
+      if (todos.length > 0) {
+        const confirmation = await vscode.window.showWarningMessage(
+          "Are you sure you want to clear all TODOs?",
+          { modal: true },
+          "Yes",
+          "No"
+        );
+        if (confirmation === "Yes") {
+          context.globalState.update("donestTodos", []);
+          vscode.window.showInformationMessage("All TODOs cleared.");
+        }
+      } else {
+        vscode.window.showInformationMessage("No TODOs found to clear.");
+      }
+    }
+  );
+  context.subscriptions.push(clearTodosDisposable);
 }
 
 // This method is called when your extension is deactivated

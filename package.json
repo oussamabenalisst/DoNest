@@ -22,11 +22,11 @@
       "command": "DoNest.RemoveTodos",
       "title": "DoNest:  Remove Todos"
     },{
-      "command": "DoNest.markTodoAsDone",
-      "title": "DoNest: Mark Todo as Done"
+      "command": "DoNest.ClearTodos",
+      "title": "DoNest: Clear Todos"
     },{
-      "command": "DoNest.markTodoAsUndone",
-      "title": "DoNest: Mark Todo as Undone"
+      "command": "DoNest.SelectTodos",
+      "title": "DoNest: Select Todos"
     }]
   },
   "scripts": {
