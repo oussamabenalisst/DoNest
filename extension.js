@@ -142,6 +142,12 @@ function activate(context) {
             filePath = selectedTodo.filePath;
           }
           if (filePath) {
+            const FolderUrl = filePath.substring(0, filePath.lastIndexOf("\\"));
+            vscode.commands.executeCommand(
+              "vscode.openFolder",
+              vscode.Uri.file(FolderUrl),
+              false
+            );
             const doc = await vscode.workspace.openTextDocument(filePath);
             await vscode.window.showTextDocument(doc, { preview: false });
             vscode.window.showInformationMessage(
