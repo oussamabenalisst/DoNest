@@ -42,5 +42,9 @@
     "eslint": "^9.25.1",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.5.2"
-  }
+  },
+  "markdown": "README.md",
+  "changelog": "CHANGELOG.md",
+  "details": "details.md",
+  "features": "features.md"
 }
