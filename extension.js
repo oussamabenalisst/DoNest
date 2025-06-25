@@ -52,7 +52,7 @@ function activate(context) {
       const todos = context.globalState.get("donestTodos", []);
       if (todos.length > 0) {
         const items = todos.map((todo) =>
-          typeof todo === "string" ? todo : `${todo.task}`
+          typeof todo === "string" ? todo : `${todo.task} (${todo.filePath})`
         );
         vscode.window.showQuickPick(items, {
           placeHolder: "Your saved TODOs:",
@@ -164,10 +164,6 @@ function activate(context) {
   context.subscriptions.push(selectTodosDisposable);
 }
 
-// This method is called when your extension is deactivated
-function deactivate() {}
-
 module.exports = {
   activate,
-  deactivate,
 };
