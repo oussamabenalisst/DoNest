@@ -12,7 +12,20 @@ function activate(context) {
       });
       if (task) {
         const editor = vscode.window.activeTextEditor;
-        const filePath = editor ? editor.document.uri.fsPath : "";
+        if (!editor) {
+          vscode.window.showWarningMessage(
+            "No active editor found. Please open a file to add a TODO."
+          );
+          return;
+        }
+        const document = editor.document;
+        if (document.isUntitled) {
+          vscode.window.showWarningMessage(
+            "Please save the file before adding a TODO."
+          );
+          return;
+        }
+        const filePath = document.uri.fsPath;
         const todos = context.globalState.get("donestTodos", []);
         const exists = todos.some(
           (todo) => todo.task === task && todo.filePath === filePath
@@ -27,11 +40,9 @@ function activate(context) {
         todos.push(todoObj);
         vscode.window.showInformationMessage(`Added TODO: ${task}`);
         context.globalState.update("donestTodos", todos);
-        if (editor) {
-          editor.edit((editBuilder) => {
-            editBuilder.insert(editor.selection.active, `${task}\n`);
-          });
-        }
+        editor.edit((editBuilder) => {
+          editBuilder.insert(editor.selection.active, `${task}\n`);
+        });
       }
     }
   );
@@ -107,6 +118,39 @@ function activate(context) {
     }
   );
   context.subscriptions.push(clearTodosDisposable);
+  let selectTodosDisposable = vscode.commands.registerCommand(
+    "DoNest.SelectTodos",
+    async () => {
+      const todos = context.globalState.get("donestTodos", []);
+      if (todos.length > 0) {
+        const items = todos.map((todo) =>
+          typeof todo === "string" ? todo : `${todo.task}`
+        );
+        const selected = await vscode.window.showQuickPick(items, {
+          placeHolder: "Select a TODO to insert at cursor:",
+        });
+        if (selected) {
+          const editor = vscode.window.activeTextEditor;
+          if (editor) {
+            let taskText = selected;
+            const match = selected.match(/^(.*) \((.*)\)$/);
+            if (match) {
+              taskText = match[1];
+            }
+            editor.edit((editBuilder) => {
+              editBuilder.insert(editor.selection.active, `${taskText}\n`);
+            });
+            vscode.window.showInformationMessage(`Inserted TODO: ${taskText}`);
+          } else {
+            vscode.window.showInformationMessage("No active editor found.");
+          }
+        }
+      } else {
+        vscode.window.showInformationMessage("No TODOs found to select.");
+      }
+    }
+  );
+  context.subscriptions.push(selectTodosDisposable);
 }
 
 // This method is called when your extension is deactivated
