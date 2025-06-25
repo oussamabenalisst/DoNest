@@ -12,7 +12,12 @@ function activate(context) {
       });
       if (task) {
         const todos = context.globalState.get("donestTodos", []);
+        if (todos.includes(task)) {
+          vscode.window.showWarningMessage("This task already exists.");
+          return;
+        }
         todos.push(`${task}`);
+        vscode.window.showInformationMessage(`Added TODO: ${task}`);
         context.globalState.update("donestTodos", todos);
         const editor = vscode.window.activeTextEditor;
         if (editor) {
