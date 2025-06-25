@@ -11,7 +11,6 @@
   ],
   "activationEvents": [],
   "main": "./extension.js",
-  "icon": "img/icon3.png",
   "contributes": {
     "commands": [{
       "command": "DoNest.addTodo",
