@@ -45,5 +45,6 @@
   "markdown": "README.md",
   "changelog": "CHANGELOG.md",
   "details": "details.md",
-  "features": "features.md"
+  "features": "features.md",
+  "publisher": "donest"
 }
