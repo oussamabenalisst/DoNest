@@ -19,7 +19,7 @@
       "command": "DoNest.ShowTodos",
       "title": "DoNest: Show Todos"
     },{
-      "command": "DoNest.removeTodos",
+      "command": "DoNest.RemoveTodos",
       "title": "DoNest:  Remove Todos"
     },{
       "command": "DoNest.markTodoAsDone",

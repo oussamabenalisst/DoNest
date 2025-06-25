@@ -43,6 +43,25 @@ function activate(context) {
   );
 
   context.subscriptions.push(showTodosDisposable);
+  let removeTodosDisposable = vscode.commands.registerCommand(
+    "DoNest.RemoveTodos",
+    async () => {
+      const todos = context.globalState.get("donestTodos", []);
+      if (todos.length > 0) {
+        const selectedTodo = await vscode.window.showQuickPick(todos, {
+          placeHolder: "Select a TODO to remove:",
+        });
+        if (selectedTodo) {
+          const updatedTodos = todos.filter((todo) => todo !== selectedTodo);
+          context.globalState.update("donestTodos", updatedTodos);
+          vscode.window.showInformationMessage(`Removed TODO: ${selectedTodo}`);
+        }
+      } else {
+        vscode.window.showInformationMessage("No TODOs found to remove.");
+      }
+    }
+  );
+  context.subscriptions.push(removeTodosDisposable);
 }
 
 // This method is called when your extension is deactivated
