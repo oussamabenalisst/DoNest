@@ -38,11 +38,8 @@ function activate(context) {
         }
         const todoObj = { task, filePath };
         todos.push(todoObj);
-        vscode.window.showInformationMessage(`Added TODO: ${task}`);
         context.globalState.update("donestTodos", todos);
-        editor.edit((editBuilder) => {
-          editBuilder.insert(editor.selection.active, `${task}\n`);
-        });
+        vscode.window.showInformationMessage(`Added TODO: ${task}`);
       }
     }
   );
