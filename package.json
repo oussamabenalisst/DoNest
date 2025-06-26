@@ -1,6 +1,11 @@
 {
   "name": "donest",
   "displayName": "Extension-Vscode",
+  "markdown": "github",
+  "changelog": "CHANGELOG.md",
+  "details": "details.md",
+  "features": "features.md",
+  "publisher": "todolistdonest",
   "description": "DoNest is your cozy, digital nest for tasks that matter. It’s more than a to-do list—it’s where your daily goals hatch into real achievements. Designed for clarity, speed, and focus, DoNest helps you build strong habits one tick at a time.",
   "version": "0.0.1",
   "engines": {
@@ -41,10 +46,5 @@
     "eslint": "^9.25.1",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.5.2"
-  },
-  "markdown": "README.md",
-  "changelog": "CHANGELOG.md",
-  "details": "details.md",
-  "features": "features.md",
-  "publisher": "donest"
+  }
 }
