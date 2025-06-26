@@ -1,4 +1,5 @@
 const vscode = require("vscode");
+const path = require("path");
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -139,7 +140,7 @@ function activate(context) {
             filePath = selectedTodo.filePath;
           }
           if (filePath) {
-            const FolderUrl = filePath.substring(0, filePath.lastIndexOf("\\"));
+            const FolderUrl = path.dirname(filePath);
             vscode.commands.executeCommand(
               "vscode.openFolder",
               vscode.Uri.file(FolderUrl),
