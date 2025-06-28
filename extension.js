@@ -226,6 +226,28 @@ class DoNestViewProvider {
         this.sendTodos();
       } else if (message.command === "getTodos") {
         this.sendTodos();
+      } else if (message.command === "openTask") {
+        const todos = this.context.globalState.get("donestTodos", []);
+        const selectedTodo = todos.find((todo) => todo.task === message.text);
+        if (selectedTodo && selectedTodo.filePath) {
+          const FolderUrl = require("path").dirname(selectedTodo.filePath);
+          await vscode.commands.executeCommand(
+            "vscode.openFolder",
+            vscode.Uri.file(FolderUrl),
+            false
+          );
+          const doc = await vscode.workspace.openTextDocument(
+            selectedTodo.filePath
+          );
+          await vscode.window.showTextDocument(doc, { preview: false });
+          vscode.window.showInformationMessage(
+            `Opened file for TODO: ${selectedTodo.task}`
+          );
+        } else {
+          vscode.window.showInformationMessage(
+            "No file path found for this TODO."
+          );
+        }
       }
     });
   }
@@ -343,11 +365,14 @@ class DoNestViewProvider {
             const list = document.getElementById('taskList');
             list.innerHTML = '';
             message.tasks.forEach(task => {
-              const li = document.createElement('li');
-              li.className = 'task-item';
-              li.innerHTML = '<span class=task-icon>✔️</span> <span>'+task+'</span>';
-              list.appendChild(li);
-            });
+            const li = document.createElement('li');
+            li.className = 'task-item';
+            li.innerHTML = '<span class=task-icon>✔️</span> <span>'+task+'</span>';
+            li.onclick = function() {
+              vscode.postMessage({ command: 'openTask', text: task });
+            };
+            list.appendChild(li);
+          });
           }
         });
         vscode.postMessage({ command: 'getTodos' });
