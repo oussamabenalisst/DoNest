@@ -18,22 +18,47 @@
   "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "DoNest.addTodo",
-      "title": "DoNest: Add Todo"
-    },{
-      "command": "DoNest.ShowTodos",
-      "title": "DoNest: Show Todos"
-    },{
-      "command": "DoNest.RemoveTodos",
-      "title": "DoNest:  Remove Todos"
-    },{
-      "command": "DoNest.ClearTodos",
-      "title": "DoNest: Clear Todos"
-    },{
-      "command": "DoNest.SelectTodos",
-      "title": "DoNest: Select Todos"
-    }]
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "donestSidebar",
+          "title": "DoNest",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "donestSidebar": [
+        {
+          "type": "webview",
+          "id": "donestView",
+          "name": "My Tasks",
+          "icon": "icon.png"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "DoNest.addTodo",
+        "title": "DoNest: Add Todo"
+      },
+      {
+        "command": "DoNest.ShowTodos",
+        "title": "DoNest: Show Todos"
+      },
+      {
+        "command": "DoNest.RemoveTodos",
+        "title": "DoNest:  Remove Todos"
+      },
+      {
+        "command": "DoNest.ClearTodos",
+        "title": "DoNest: Clear Todos"
+      },
+      {
+        "command": "DoNest.SelectTodos",
+        "title": "DoNest: Select Todos"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",

@@ -163,6 +163,56 @@ function activate(context) {
     }
   );
   context.subscriptions.push(selectTodosDisposable);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(
+      "donestView",
+      new DoNestViewProvider(context)
+    )
+  );
+}
+class DoNestViewProvider {
+  constructor(context) {
+    this.context = context;
+  }
+
+  resolveWebviewView(webviewView) {
+    webviewView.webview.options = {
+      enableScripts: true,
+    };
+
+    webviewView.webview.html = this.getHtml();
+  }
+
+  getHtml() {
+    return `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          body { font-family: sans-serif; padding: 10px; }
+          button { margin-top: 10px; }
+        </style>
+      </head>
+      <body>
+        <h2>📋 DoNest</h2>
+        <input type="text" id="taskInput" placeholder="Add a task" />
+        <button onclick="addTask()">Add</button>
+        <ul id="taskList"></ul>
+        <script>
+          function addTask() {
+            const input = document.getElementById('taskInput');
+            const list = document.getElementById('taskList');
+            const li = document.createElement('li');
+            li.textContent = input.value;
+            list.appendChild(li);
+            input.value = '';
+          }
+        </script>
+      </body>
+      </html>
+    `;
+  }
 }
 
 module.exports = {
