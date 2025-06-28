@@ -227,45 +227,122 @@ class DoNestViewProvider {
 
   getHtml() {
     return `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <style>
-          body { font-family: sans-serif; padding: 10px; }
-          button { margin-top: 10px; }
-        </style>
-      </head>
-      <body>
-        <input type="text" id="taskInput" placeholder="Add a task" />
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <style>
+        :root {
+          color-scheme: light dark;
+        }
+        body {
+          font-family: var(--vscode-font-family, sans-serif);
+          background: var(--vscode-editor-background, #1e1e1e);
+          color: var(--vscode-editor-foreground, #d4d4d4);
+          padding: 16px 18px 12px 18px;
+          margin: 0;
+        }
+        h2 {
+          margin-top: 0;
+          margin-bottom: 18px;
+          font-size: 1.3em;
+          color: var(--vscode-sideBarTitle-foreground, #fff);
+          letter-spacing: 0.5px;
+        }
+        .input-row {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 18px;
+        }
+        #taskInput {
+          flex: 1;
+          padding: 8px 12px;
+          border-radius: 6px;
+          border: 1px solid var(--vscode-input-border, #333);
+          background: var(--vscode-input-background, #232323);
+          color: var(--vscode-input-foreground, #fff);
+          font-size: 1em;
+          outline: none;
+          transition: border 0.2s;
+        }
+        #taskInput:focus {
+          border: 1.5px solid var(--vscode-focusBorder, #0078d4);
+        }
+        #addBtn {
+          background: var(--vscode-button-background, #0e639c);
+          color: var(--vscode-button-foreground, #fff);
+          border: none;
+          border-radius: 6px;
+          padding: 8px 18px;
+          font-size: 1em;
+          cursor: pointer;
+          transition: background 0.2s, box-shadow 0.2s;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+        #addBtn:hover {
+          background: var(--vscode-button-hoverBackground, #1177bb);
+        }
+        #taskList {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .task-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: var(--vscode-list-inactiveSelectionBackground, #222c37);
+          color: var(--vscode-list-foreground, #fff);
+          border-radius: 6px;
+          padding: 8px 12px;
+          margin-bottom: 8px;
+          font-size: 1em;
+          transition: background 0.2s;
+        }
+        .task-item:hover {
+          background: var(--vscode-list-hoverBackground, #2a3545);
+        }
+        .task-icon {
+          color: var(--vscode-icon-foreground, #c5c5c5);
+          font-size: 1.1em;
+          margin-right: 2px;
+        }
+      </style>
+    </head>
+    <body>
+      <h2>DoNest</h2>
+      <div class="input-row">
+        <input type="text" id="taskInput" placeholder="Add a task" autocomplete="off" />
         <button id="addBtn">Add</button>
-        <ul id="taskList"></ul>
-        <script>
-          const vscode = acquireVsCodeApi();
-          document.getElementById('addBtn').onclick = function() {
-            const input = document.getElementById('taskInput');
-            if (input.value.trim()) {
-              vscode.postMessage({ command: 'addTask', text: input.value.trim() });
-              input.value = '';
-            }
-          };
-          window.addEventListener('message', event => {
-            const message = event.data;
-            if (message.command === 'setTodos') {
-              const list = document.getElementById('taskList');
-              list.innerHTML = '';
-              message.tasks.forEach(task => {
-                const li = document.createElement('li');
-                li.textContent = task;
-                list.appendChild(li);
-              });
-            }
-          });
-          vscode.postMessage({ command: 'getTodos' });
-        </script>
-      </body>
-      </html>
-    `;
+      </div>
+      <ul id="taskList"></ul>
+      <script>
+        const vscode = acquireVsCodeApi();
+        document.getElementById('addBtn').onclick = function() {
+          const input = document.getElementById('taskInput');
+          if (input.value.trim()) {
+            vscode.postMessage({ command: 'addTask', text: input.value.trim() });
+            input.value = '';
+          }
+        };
+        window.addEventListener('message', event => {
+          const message = event.data;
+          if (message.command === 'setTodos') {
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            message.tasks.forEach(task => {
+              const li = document.createElement('li');
+              li.className = 'task-item';
+              li.innerHTML = '<span class=task-icon>✔️</span> <span>'+task+'</span>';
+              list.appendChild(li);
+            });
+          }
+        });
+        vscode.postMessage({ command: 'getTodos' });
+      </script>
+    </body>
+    </html>
+  `;
   }
 }
 
