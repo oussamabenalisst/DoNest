@@ -23,7 +23,8 @@
         {
           "id": "donestSidebar",
           "title": "DoNest",
-          "icon": "media/icon.svg"
+          "icon": "iconl.png",
+          "icon.dark": "icondark.png"
         }
       ]
     },
@@ -33,7 +34,8 @@
           "type": "webview",
           "id": "donestView",
           "name": "",
-          "icon": "icon.png"
+          "icon": "iconl.png",
+          "icon.dark": "icondark.png"
         }
       ]
     },
