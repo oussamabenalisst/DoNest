@@ -40,6 +40,7 @@ function activate(context) {
         const todoObj = { task, filePath };
         todos.push(todoObj);
         context.globalState.update("donestTodos", todos);
+        DoNestViewProvider.updateAllWebviews();
         vscode.window.showInformationMessage(`Added TODO: ${task}`);
       }
     }
@@ -87,6 +88,7 @@ function activate(context) {
             }
           });
           context.globalState.update("donestTodos", updatedTodos);
+          DoNestViewProvider.updateAllWebviews();
           vscode.window.showInformationMessage(`Removed TODO: ${selected}`);
         }
       } else {
@@ -108,6 +110,7 @@ function activate(context) {
         );
         if (confirmation === "Yes") {
           context.globalState.update("donestTodos", []);
+          DoNestViewProvider.updateAllWebviews();
           vscode.window.showInformationMessage("All TODOs cleared.");
         }
       } else {
@@ -171,9 +174,18 @@ function activate(context) {
   );
 }
 class DoNestViewProvider {
+  static currentViewProvider = null;
+
   constructor(context) {
     this.context = context;
     this._view = undefined;
+    DoNestViewProvider.currentViewProvider = this;
+  }
+
+  static updateAllWebviews() {
+    if (DoNestViewProvider.currentViewProvider) {
+      DoNestViewProvider.currentViewProvider.sendTodos();
+    }
   }
 
   resolveWebviewView(webviewView) {
