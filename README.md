@@ -1,7 +1,5 @@
 # DoNest VS Code Extension
 
-![DoNest Logo](/icon.png)
-
 DoNest is a Visual Studio Code extension designed to boost your productivity by helping you manage and organize your tasks directly within your development environment.
 
 ## How to Use
