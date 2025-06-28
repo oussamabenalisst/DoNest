@@ -32,7 +32,7 @@
         {
           "type": "webview",
           "id": "donestView",
-          "name": "My Tasks",
+          "name": "",
           "icon": "icon.png"
         }
       ]

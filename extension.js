@@ -173,14 +173,56 @@ function activate(context) {
 class DoNestViewProvider {
   constructor(context) {
     this.context = context;
+    this._view = undefined;
   }
 
   resolveWebviewView(webviewView) {
+    this._view = webviewView;
     webviewView.webview.options = {
       enableScripts: true,
     };
 
     webviewView.webview.html = this.getHtml();
+    webviewView.webview.onDidReceiveMessage(async (message) => {
+      if (message.command === "addTask") {
+        const task = message.text;
+        if (!task) return;
+        const todos = this.context.globalState.get("donestTodos", []);
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+          vscode.window.showWarningMessage(
+            "No active editor found. Please open a file to add a TODO."
+          );
+          return;
+        }
+        const document = editor.document;
+        if (document.isUntitled) {
+          vscode.window.showWarningMessage(
+            "Please save the file before adding a TODO."
+          );
+          return;
+        }
+        const filePath = document.uri.fsPath;
+        const exists = todos.some(
+          (todo) => todo.task === task && todo.filePath === filePath
+        );
+        if (!exists) {
+          const todoObj = { task, filePath };
+          todos.push(todoObj);
+          await this.context.globalState.update("donestTodos", todos);
+        }
+        this.sendTodos();
+      } else if (message.command === "getTodos") {
+        this.sendTodos();
+      }
+    });
+  }
+
+  sendTodos() {
+    if (!this._view) return;
+    const todos = this.context.globalState.get("donestTodos", []);
+    const tasks = todos.map((todo) => todo.task);
+    this._view.webview.postMessage({ command: "setTodos", tasks });
   }
 
   getHtml() {
@@ -195,19 +237,31 @@ class DoNestViewProvider {
         </style>
       </head>
       <body>
-        <h2>📋 DoNest</h2>
         <input type="text" id="taskInput" placeholder="Add a task" />
-        <button onclick="addTask()">Add</button>
+        <button id="addBtn">Add</button>
         <ul id="taskList"></ul>
         <script>
-          function addTask() {
+          const vscode = acquireVsCodeApi();
+          document.getElementById('addBtn').onclick = function() {
             const input = document.getElementById('taskInput');
-            const list = document.getElementById('taskList');
-            const li = document.createElement('li');
-            li.textContent = input.value;
-            list.appendChild(li);
-            input.value = '';
-          }
+            if (input.value.trim()) {
+              vscode.postMessage({ command: 'addTask', text: input.value.trim() });
+              input.value = '';
+            }
+          };
+          window.addEventListener('message', event => {
+            const message = event.data;
+            if (message.command === 'setTodos') {
+              const list = document.getElementById('taskList');
+              list.innerHTML = '';
+              message.tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.textContent = task;
+                list.appendChild(li);
+              });
+            }
+          });
+          vscode.postMessage({ command: 'getTodos' });
         </script>
       </body>
       </html>
