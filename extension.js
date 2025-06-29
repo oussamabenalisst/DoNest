@@ -341,10 +341,12 @@ class DoNestViewProvider {
           font-size: 1.1em;
           margin-right: 2px;
         }
+        li{
+          cursor: pointer;
+        }
       </style>
     </head>
     <body>
-      <h2>DoNest</h2>
       <div class="input-row">
         <input type="text" id="taskInput" placeholder="Add a task" autocomplete="off" />
         <button id="addBtn">Add</button>
