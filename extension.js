@@ -198,7 +198,10 @@ class DoNestViewProvider {
     webviewView.webview.onDidReceiveMessage(async (message) => {
       if (message.command === "addTask") {
         const task = message.text;
-        if (!task) return;
+        if (!task || task == "") {
+          vscode.window.showWarningMessage("input is empty");
+          return;
+        }
         const todos = this.context.globalState.get("donestTodos", []);
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
@@ -222,6 +225,11 @@ class DoNestViewProvider {
           const todoObj = { task, filePath };
           todos.push(todoObj);
           await this.context.globalState.update("donestTodos", todos);
+        } else {
+          vscode.window.showWarningMessage(
+            "This task already exists for this file."
+          );
+          return;
         }
         this.sendTodos();
       } else if (message.command === "getTodos") {
