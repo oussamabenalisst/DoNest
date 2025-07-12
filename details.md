@@ -1,15 +1,67 @@
 # Details
 
-DoNest is designed to help developers manage their daily tasks without leaving the VS Code environment. It provides a lightweight, non-intrusive way to keep track of todos related to specific files or projects. All tasks are stored persistently and can be managed through simple commands.
+DoNest is a sophisticated task management extension for Visual Studio Code that combines modern UI design with practical functionality. It's designed to enhance developer productivity by providing an intuitive, file-centric approach to task management.
 
-## Why DoNest?
+## Core Principles
 
-- Focus on productivity without context switching.
-- Keep todos close to your code.
-- Build strong habits with a clear and minimal interface.
+1. **Seamless Integration**
 
-## Usage Scenarios
+   - Integrates naturally with VS Code's interface
+   - Adapts to VS Code's theme system
+   - Responds to workspace context
 
-- Track bugs or improvements per file.
-- Maintain a daily coding checklist.
-- Organize project-specific tasks.
+2. **User Experience**
+
+   - Modern, responsive design
+   - Intuitive hover interactions
+   - Clear visual feedback
+   - Efficient keyboard and mouse workflows
+
+3. **Task Organization**
+   - File-specific task association
+   - Persistent storage across sessions
+   - Quick navigation to task contexts
+   - Batch management capabilities
+
+## Technical Features
+
+### UI Components
+
+- Responsive input field with validation
+- Action buttons with hover effects
+- Task list with dynamic actions
+- Theme-aware styling
+
+### Task Management
+
+- Add tasks with file association
+- Edit task names inline
+- Delete individual tasks
+- Clear all tasks with confirmation
+- Navigate to task files
+
+### Data Handling
+
+- Persistent storage using VS Code's global state
+- File path tracking for each task
+- Duplicate task prevention
+- Input validation and sanitization
+
+## Use Cases
+
+1. **Project Management**
+
+   - Track feature implementations
+   - Mark areas for refactoring
+   - List optimization opportunities
+
+2. **Code Review**
+
+   - Note review comments
+   - Track required changes
+   - Mark follow-up items
+
+3. **Personal Organization**
+   - Daily coding goals
+   - Bug fix tracking
+   - Documentation tasks
