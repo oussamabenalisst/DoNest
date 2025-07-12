@@ -1,46 +1,119 @@
-# DoNest VS Code Extension
 
-DoNest is a Visual Studio Code extension that provides an elegant and efficient way to manage your tasks directly within your development environment. With a modern UI and intuitive controls, it helps you stay organized without leaving your editor.
+<div align="center">
 
-## Features
+# DoNest 📝
 
-- **Modern UI Interface**: Clean and responsive design that adapts to VS Code's theme
-- **Task Management**: Add, edit, delete, and clear tasks with ease
-- **File Association**: Tasks are linked to specific files for better organization
-- **Quick Access**: Access tasks through the sidebar view or command palette
-- **Visual Feedback**: Intuitive icons and hover effects for better user experience
+A modern, elegant task management extension for Visual Studio Code.
 
-## How to Use
+[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
+[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
+[![Rating](https://img.shields.io/badge/rating-★★★★★-gold.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
 
-1. **Access the Extension**:
+</div>
 
-   - Open the DoNest view from the Activity Bar
-   - Use the input field to add new tasks
-   - Click on task text to open associated files
-   - Use edit and delete buttons to manage tasks
+## ✨ Overview
 
-2. **Available Commands**:
+DoNest transforms your VS Code workspace into a powerful task management environment. With its sleek, modern UI and intuitive controls, you can efficiently manage your tasks without ever leaving your editor. Perfect for developers who want to keep their workflow streamlined and organized.
 
-   - `DoNest: Add Todo`: Add a new task
-   - `DoNest: Show Todos`: Display all tasks in a quick pick
-   - `DoNest: Remove Todos`: Remove specific tasks
-   - `DoNest: Clear Todos`: Clear all tasks with confirmation
-   - `DoNest: Select Todos`: Navigate to task-associated files
-   - `DoNest: Rename Todos`: Rename existing tasks
+## 🚀 Key Features
 
-3. **UI Features**:
-   - Input field with add button
-   - Clear All button for batch deletion
-   - Task list with hover actions
-   - Edit and delete buttons per task
-   - Click-to-navigate task text
+### 💫 Modern User Interface
 
-## Requirements
+- **Theme-Aware Design**: Seamlessly adapts to your VS Code theme
+- **Responsive Layout**: Perfect display on any window size
+- **Intuitive Controls**: Easy-to-use buttons and inputs
+- **Visual Feedback**: Smooth animations and hover effects
+
+### 📋 Task Management
+
+- **Smart Task Creation**: Add tasks with automatic file linking
+- **Quick Actions**: Edit, delete, or clear tasks with a click
+- **Batch Operations**: Manage multiple tasks efficiently
+- **File Association**: Tasks are linked to specific files for context
+
+### ⚡ Quick Access
+
+- **Sidebar Integration**: Access tasks from the Activity Bar
+- **Command Palette**: Full keyboard control support
+- **One-Click Navigation**: Jump to task-related files instantly
+- **Smart Search**: Find tasks quickly with the quick pick menu
+
+## 📖 How to Use
+
+### 1️⃣ Getting Started
+
+1. Install DoNest from the VS Code Marketplace
+2. Click the DoNest icon in the Activity Bar
+3. Start adding tasks to your workspace!
+
+### 2️⃣ Task Operations
+
+#### Creating Tasks
+
+- Use the input field at the top
+- Press Enter or click 'Add'
+- Tasks are automatically linked to the active file
+
+#### Managing Tasks
+
+- **Edit**: Click the ✏️ button
+- **Delete**: Click the ❌ button
+- **Navigate**: Click the task text
+- **Clear All**: Use the 'Clear All' button
+
+### 3️⃣ Command Palette Integration
+
+Access all features through the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`):
+
+| Command                  | Description            |
+| ------------------------ | ---------------------- |
+| \`DoNest: Add Todo\`     | Create a new task      |
+| \`DoNest: Show Todos\`   | View all tasks         |
+| \`DoNest: Remove Todos\` | Delete specific tasks  |
+| \`DoNest: Clear Todos\`  | Remove all tasks       |
+| \`DoNest: Select Todos\` | Navigate to task files |
+| \`DoNest: Rename Todos\` | Modify task names      |
+
+## 💻 Requirements
 
 - Visual Studio Code version 1.60.0 or higher
+- Active workspace with saved files
 
-## Support & Feedback
+## 🛠️ Installation
 
-For issues, suggestions, or contributions, please visit the [GitHub repository](https://github.com/oussamabenalisst/DoNest).
+1. Open VS Code
+2. Press `Ctrl+P` / `Cmd+P`
+3. Type: `ext install oussamabenalisst.donest`
 
-**Enjoy organizing your tasks with DoNest!**
+## 🎨 Customization
+
+DoNest automatically adapts to your VS Code theme, ensuring a consistent and beautiful look:
+
+- Light and dark theme support
+- Consistent with VS Code's design
+- Readable and accessible interface
+- Smooth animations and transitions
+
+## 🤝 Support & Feedback
+
+We love hearing from our users! If you have:
+
+- 🐛 Found a bug
+- 💡 Feature suggestion
+- 👋 General feedback
+
+Visit our [GitHub repository](https://github.com/oussamabenalisst/DoNest) to:
+
+- Create an issue
+- Submit a pull request
+- Join the discussion
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [Oussama Ben Ali](https://github.com/oussamabenalisst)**
+
+If you find DoNest helpful, please consider giving it a ⭐ on [GitHub](https://github.com/oussamabenalisst/DoNest)!
+
+</div>
