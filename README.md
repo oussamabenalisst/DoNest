@@ -8,13 +8,66 @@ A modern, elegant task management extension for Visual Studio Code.
 [![Version](https://img.shields.io/badge/version-1.0.2-brightgreen.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-![DoNest Icon](images/icon1.png)
+<img src="images/icon1.png" alt="DoNest Banner" width="600"/>
+
+</div>
+
+## ✨ Preview
+
+<div align="center">
+
+### 🎯 Task Management
+
+<img src="images/addtask.gif" alt="Task Management Demo" width="600"/>
+
+### 📝 Quick Editing
+
+<img src="images/RemoveTask.gif" alt="Quick Editing Demo" width="600"/>
+
+### 🗑️ Batch Operations
+
+<img src="images/UAUI.gif" alt="Batch Operations Demo" width="600"/>
 
 </div>
 
 ## ✨ Overview
 
 DoNest transforms your VS Code workspace into a powerful task management environment. With its sleek, modern UI and intuitive controls, you can efficiently manage your tasks without ever leaving your editor. Perfect for developers who want to keep their workflow streamlined and organized.
+
+## 🎬 Features in Action
+
+<details>
+<summary>📋 Task Creation and Management</summary>
+<div align="center">
+<img src="images/task-creation.gif" alt="Task Creation Demo" width="600"/>
+</div>
+
+- One-click task creation
+- Automatic file linking
+- Smart task organization
+</details>
+
+<details>
+<summary>✏️ Edit and Update</summary>
+<div align="center">
+<img src="images/edit-tasks.gif" alt="Edit Tasks Demo" width="600"/>
+</div>
+
+- Quick rename functionality
+- Instant updates
+- Smooth animations
+</details>
+
+<details>
+<summary>🗂️ File Navigation</summary>
+<div align="center">
+<img src="images/file-navigation.gif" alt="File Navigation Demo" width="600"/>
+</div>
+
+- Click to open files
+- Smart file tracking
+- Quick workspace navigation
+</details>
 
 ## 🚀 Key Features
 
@@ -38,8 +91,6 @@ DoNest transforms your VS Code workspace into a powerful task management environ
 - **Command Palette**: Full keyboard control support
 - **One-Click Navigation**: Jump to task-related files instantly
 - **Smart Search**: Find tasks quickly with the quick pick menu
-
-## 📖 How to Use
 
 ### 1️⃣ Getting Started
 
@@ -82,18 +133,13 @@ Access all features through the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
 
 ## 🛠️ Installation
 
+<div align="center">
+<img src="images/installation.gif" alt="Installation Guide" width="600"/>
+</div>
+
 1. Open VS Code
 2. Press `Ctrl+P` / `Cmd+P`
 3. Type: `ext install oussamabenalisst.donest`
-
-## 🎨 Customization
-
-DoNest automatically adapts to your VS Code theme, ensuring a consistent and beautiful look:
-
-- Light and dark theme support
-- Consistent with VS Code's design
-- Readable and accessible interface
-- Smooth animations and transitions
 
 ## 🤝 Support & Feedback
 
@@ -112,8 +158,6 @@ Visit our [GitHub repository](https://github.com/oussamabenalisst/DoNest) to:
 ---
 
 <div align="center">
-
-**Made with ❤️ by [Oussama Ben Ali](https://github.com/oussamabenalisst)**
 
 If you find DoNest helpful, please consider giving it a ⭐ on [GitHub](https://github.com/oussamabenalisst/DoNest)!
 
