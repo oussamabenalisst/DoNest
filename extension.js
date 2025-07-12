@@ -234,6 +234,23 @@ class DoNestViewProvider {
         this.sendTodos();
       } else if (message.command === "getTodos") {
         this.sendTodos();
+      } else if (message.command === "clearTasks") {
+        const todos = this.context.globalState.get("donestTodos", []);
+        if (todos.length === 0) {
+          vscode.window.showWarningMessage("No tasks to clear!");
+          return;
+        }
+        const confirmation = await vscode.window.showWarningMessage(
+          "Are you sure you want to clear all TODOs?",
+          { modal: true },
+          "Yes",
+          "No"
+        );
+        if (confirmation === "Yes") {
+          await this.context.globalState.update("donestTodos", []);
+          this.sendTodos();
+          vscode.window.showInformationMessage("All TODOs cleared.");
+        }
       } else if (message.command === "openTask") {
         const todos = this.context.globalState.get("donestTodos", []);
         const selectedTodo = todos.find((todo) => todo.task === message.text);
@@ -294,6 +311,11 @@ class DoNestViewProvider {
         .input-row {
           display: flex;
           gap: 8px;
+          margin-bottom: 12px;
+        }
+        .button-row {
+          display: flex;
+          justify-content: flex-end;
           margin-bottom: 18px;
         }
         #taskInput {
@@ -310,7 +332,7 @@ class DoNestViewProvider {
         #taskInput:focus {
           border: 1.5px solid var(--vscode-focusBorder, #0078d4);
         }
-        #addBtn {
+        #addBtn, #clearAllBtn {
           background: var(--vscode-button-background, #0e639c);
           color: var(--vscode-button-foreground, #fff);
           border: none;
@@ -321,8 +343,15 @@ class DoNestViewProvider {
           transition: background 0.2s, box-shadow 0.2s;
           box-shadow: 0 1px 2px rgba(0,0,0,0.08);
         }
+        #clearAllBtn {
+          background: var(--vscode-button-secondaryBackground, #8B0000);
+          width: 100%;
+        }
         #addBtn:hover {
           background: var(--vscode-button-hoverBackground, #1177bb);
+        }
+        #clearAllBtn:hover {
+          background: var(--vscode-button-secondaryHoverBackground, #A52A2A);
         }
         #taskList {
           list-style: none;
@@ -359,9 +388,13 @@ class DoNestViewProvider {
         <input type="text" id="taskInput" placeholder="Add a task" autocomplete="off" />
         <button id="addBtn">Add</button>
       </div>
+      <div class="button-row">
+        <button id="clearAllBtn">Clear All</button>
+      </div>
       <ul id="taskList"></ul>
       <script>
         const vscode = acquireVsCodeApi();
+        
         document.getElementById('addBtn').onclick = function() {
           const input = document.getElementById('taskInput');
           if (input.value.trim()) {
@@ -369,22 +402,28 @@ class DoNestViewProvider {
             input.value = '';
           }
         };
+
+        document.getElementById('clearAllBtn').onclick = function() {
+          vscode.postMessage({ command: 'clearTasks' });
+        };
+
         window.addEventListener('message', event => {
           const message = event.data;
           if (message.command === 'setTodos') {
             const list = document.getElementById('taskList');
             list.innerHTML = '';
             message.tasks.forEach(task => {
-            const li = document.createElement('li');
-            li.className = 'task-item';
-            li.innerHTML = '<span class=task-icon>✔️</span> <span>'+task+'</span>';
-            li.onclick = function() {
-              vscode.postMessage({ command: 'openTask', text: task });
-            };
-            list.appendChild(li);
-          });
+              const li = document.createElement('li');
+              li.className = 'task-item';
+              li.innerHTML = '<span class=task-icon>✔️</span> <span>'+task+'</span>';
+              li.onclick = function() {
+                vscode.postMessage({ command: 'openTask', text: task });
+              };
+              list.appendChild(li);
+            });
           }
         });
+        
         vscode.postMessage({ command: 'getTodos' });
       </script>
     </body>
