@@ -314,9 +314,11 @@ class DoNestViewProvider {
         }
         .input-row {
           display: flex;
-          align-items: center;
+          align-items: stretch;
           gap: 6px;
           margin-bottom: 8px;
+          width: 100%;
+          min-width: 0;
         }
         .button-row {
           display: flex;
@@ -326,6 +328,7 @@ class DoNestViewProvider {
         }
         #taskInput {
           flex: 1;
+          min-width: 0;
           height: 28px;
           padding: 0 8px;
           border-radius: 4px;
@@ -339,7 +342,24 @@ class DoNestViewProvider {
         #taskInput:focus {
           border: 1px solid var(--vscode-focusBorder, #0078d4);
         }
-        #addBtn, #clearAllBtn {
+        #addBtn {
+          height: 28px;
+          white-space: nowrap;
+          padding: 0 12px;
+          border: none;
+          border-radius: 4px;
+          font-size: 13px;
+          cursor: pointer;
+          transition: background 0.2s;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--vscode-button-background, #0e639c);
+          color: var(--vscode-button-foreground, #fff);
+          flex-shrink: 0;
+        }
+        #clearAllBtn {
+          width: 100%;
           height: 28px;
           padding: 0 12px;
           border: none;
@@ -350,19 +370,8 @@ class DoNestViewProvider {
           display: flex;
           align-items: center;
           justify-content: center;
-          min-width: 60px;
-          background: var(--vscode-button-background, #0e639c);
-          color: var(--vscode-button-foreground, #fff);
-        }
-        #clearAllBtn {
-          width: 100%;
           background: var(--vscode-button-secondaryBackground, #8B0000);
-        }
-        #addBtn:hover {
-          background: var(--vscode-button-hoverBackground, #1177bb);
-        }
-        #clearAllBtn:hover {
-          background: var(--vscode-button-secondaryHoverBackground, #A52A2A);
+          color: var(--vscode-button-foreground, #fff);
         }
         #taskList {
           list-style: none;
@@ -463,13 +472,9 @@ class DoNestViewProvider {
                 <span class="task-text">\${task}</span>
                 <button class="delete-btn">❌</button>
               \`;
-              
-              // فتح الملف عند النقر على المهمة
               li.querySelector('.task-text').onclick = function() {
                 vscode.postMessage({ command: 'openTask', text: task });
               };
-              
-              // حذف المهمة عند النقر على زر الحذف
               li.querySelector('.delete-btn').onclick = function(e) {
                 e.stopPropagation();
                 vscode.postMessage({ command: 'deleteTask', text: task });
@@ -479,7 +484,6 @@ class DoNestViewProvider {
             });
           }
         });
-        
         vscode.postMessage({ command: 'getTodos' });
       </script>
     </body>
