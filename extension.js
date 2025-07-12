@@ -166,6 +166,45 @@ function activate(context) {
     }
   );
   context.subscriptions.push(selectTodosDisposable);
+  let RenameTodosDisposable = vscode.commands.registerCommand(
+    "DoNest.RenameTodos",
+    async () => {
+      const todos = context.globalState.get("donestTodos", []);
+      if (todos.length > 0) {
+        const items = todos.map((todo) =>
+          typeof todo === "string" ? todo : `${todo.task} (${todo.filePath})`
+        );
+        const selected = await vscode.window.showQuickPick(items, {
+          placeHolder: "Select a TODO to rename:",
+        });
+        if (selected) {
+          const newName = await vscode.window.showInputBox({
+            placeHolder: "Enter new name for TODO:",
+          });
+          if (newName) {
+            let selectedTodo = todos.find((todo) => {
+              if (typeof todo === "string") {
+                return todo === selected;
+              } else {
+                return `${todo.task} (${todo.filePath})` === selected;
+              }
+            });
+            if (selectedTodo) {
+              selectedTodo.task = newName;
+              await context.globalState.update("donestTodos", todos);
+              DoNestViewProvider.updateAllWebviews();
+              vscode.window.showInformationMessage(
+                `Renamed TODO: ${selected} to ${newName}`
+              );
+            }
+          }
+        }
+      } else {
+        vscode.window.showInformationMessage("No TODOs found to rename.");
+      }
+    }
+  );
+  context.subscriptions.push(RenameTodosDisposable);
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       "donestView",
@@ -234,6 +273,24 @@ class DoNestViewProvider {
         this.sendTodos();
       } else if (message.command === "getTodos") {
         this.sendTodos();
+      } else if (message.command === "editTask") {
+        const todos = this.context.globalState.get("donestTodos", []);
+        const selectedTodo = todos.find((todo) => todo.task === message.text);
+
+        if (selectedTodo) {
+          const newName = await vscode.window.showInputBox({
+            value: selectedTodo.task,
+            prompt: "Enter new name for the task",
+            placeHolder: "New task name",
+          });
+
+          if (newName && newName.trim()) {
+            selectedTodo.task = newName.trim();
+            await this.context.globalState.update("donestTodos", todos);
+            this.sendTodos();
+            vscode.window.showInformationMessage(`Renamed task to: ${newName}`);
+          }
+        }
       } else if (message.command === "deleteTask") {
         const todos = this.context.globalState.get("donestTodos", []);
         const updatedTodos = todos.filter((todo) => todo.task !== message.text);
@@ -404,29 +461,45 @@ class DoNestViewProvider {
           text-overflow: ellipsis;
           white-space: nowrap;
           line-height: 20px;
-          margin-right: 24px;
+          margin-right: 60px;
         }
-        .delete-btn {
-          opacity: 0;
+        .task-actions {
           position: absolute;
           right: 8px;
           top: 50%;
           transform: translateY(-50%);
+          display: flex;
+          gap: 6px;
+          opacity: 0;
+          transition: opacity 0.2s;
+        }
+        .task-item:hover .task-actions {
+          opacity: 1;
+        }
+        .edit-btn, .delete-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 22px;
+          height: 22px;
           background: transparent;
           border: none;
           color: var(--vscode-icon-foreground, #c5c5c5);
           cursor: pointer;
           font-size: 14px;
-          padding: 2px 6px;
+          padding: 0;
           border-radius: 3px;
-          transition: all 0.2s;
+          transition: all 0.2s ease;
         }
-        .task-item:hover .delete-btn {
-          opacity: 1;
+        .edit-btn:hover {
+          background: var(--vscode-button-background, #0e639c);
+          color: white;
+          transform: translateY(-1px);
         }
         .delete-btn:hover {
           background: var(--vscode-button-secondaryBackground, #8B0000);
           color: white;
+          transform: translateY(-1px);
         }
         li {
           cursor: pointer;
@@ -470,11 +543,21 @@ class DoNestViewProvider {
               li.innerHTML = \`
                 <span class="task-icon">✔️</span>
                 <span class="task-text">\${task}</span>
-                <button class="delete-btn">❌</button>
+                <div class="task-actions">
+                  <button class="edit-btn">✏️</button>
+                  <button class="delete-btn">❌</button>
+                </div>
               \`;
+              
               li.querySelector('.task-text').onclick = function() {
                 vscode.postMessage({ command: 'openTask', text: task });
               };
+              
+              li.querySelector('.edit-btn').onclick = function(e) {
+                e.stopPropagation();
+                vscode.postMessage({ command: 'editTask', text: task });
+              };
+
               li.querySelector('.delete-btn').onclick = function(e) {
                 e.stopPropagation();
                 vscode.postMessage({ command: 'deleteTask', text: task });
@@ -484,6 +567,7 @@ class DoNestViewProvider {
             });
           }
         });
+        
         vscode.postMessage({ command: 'getTodos' });
       </script>
     </body>
