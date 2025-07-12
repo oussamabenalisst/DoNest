@@ -234,6 +234,12 @@ class DoNestViewProvider {
         this.sendTodos();
       } else if (message.command === "getTodos") {
         this.sendTodos();
+      } else if (message.command === "deleteTask") {
+        const todos = this.context.globalState.get("donestTodos", []);
+        const updatedTodos = todos.filter((todo) => todo.task !== message.text);
+        await this.context.globalState.update("donestTodos", updatedTodos);
+        this.sendTodos();
+        vscode.window.showInformationMessage(`Removed TODO: ${message.text}`);
       } else if (message.command === "clearTasks") {
         const todos = this.context.globalState.get("donestTodos", []);
         if (todos.length === 0) {
@@ -374,6 +380,7 @@ class DoNestViewProvider {
           margin-bottom: 4px;
           font-size: 13px;
           transition: background 0.2s;
+          position: relative;
         }
         .task-item:hover {
           background: var(--vscode-list-hoverBackground, #2a3545);
@@ -388,6 +395,29 @@ class DoNestViewProvider {
           text-overflow: ellipsis;
           white-space: nowrap;
           line-height: 20px;
+          margin-right: 24px;
+        }
+        .delete-btn {
+          opacity: 0;
+          position: absolute;
+          right: 8px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: transparent;
+          border: none;
+          color: var(--vscode-icon-foreground, #c5c5c5);
+          cursor: pointer;
+          font-size: 14px;
+          padding: 2px 6px;
+          border-radius: 3px;
+          transition: all 0.2s;
+        }
+        .task-item:hover .delete-btn {
+          opacity: 1;
+        }
+        .delete-btn:hover {
+          background: var(--vscode-button-secondaryBackground, #8B0000);
+          color: white;
         }
         li {
           cursor: pointer;
@@ -428,10 +458,23 @@ class DoNestViewProvider {
             message.tasks.forEach(task => {
               const li = document.createElement('li');
               li.className = 'task-item';
-              li.innerHTML = '<span class="task-icon">✔️</span><span class="task-text">'+task+'</span>';
-              li.onclick = function() {
+              li.innerHTML = \`
+                <span class="task-icon">✔️</span>
+                <span class="task-text">\${task}</span>
+                <button class="delete-btn">❌</button>
+              \`;
+              
+              // فتح الملف عند النقر على المهمة
+              li.querySelector('.task-text').onclick = function() {
                 vscode.postMessage({ command: 'openTask', text: task });
               };
+              
+              // حذف المهمة عند النقر على زر الحذف
+              li.querySelector('.delete-btn').onclick = function(e) {
+                e.stopPropagation();
+                vscode.postMessage({ command: 'deleteTask', text: task });
+              };
+              
               list.appendChild(li);
             });
           }
