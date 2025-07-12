@@ -2,10 +2,14 @@
 
 # DoNest 📝
 
+<!-- add icon1 from images -->
+
+![DoNest Icon](https://raw.githubusercontent.com/oussamabenalisst/DoNest/main/images/icon.png)
+
 A modern, elegant task management extension for Visual Studio Code.
 
 [![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
-[![Version](https://img.shields.io/badge/version-1.0.1-brightgreen.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest):
+[![Version](https://img.shields.io/badge/version-1.0.2-brightgreen.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
 [![Rating](https://img.shields.io/badge/rating-★★★★★-gold.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
 
 </div>
