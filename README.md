@@ -8,7 +8,7 @@ A modern, elegant task management extension for Visual Studio Code.
 [![Version](https://img.shields.io/badge/version-1.0.2-brightgreen.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-<img src="images/icon1.png" alt="DoNest Banner" width="600"/>
+<img src="images/icon1.png" alt="DoNest Banner" width="300"/>
 
 </div>
 
