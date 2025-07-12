@@ -298,54 +298,59 @@ class DoNestViewProvider {
           font-family: var(--vscode-font-family, sans-serif);
           background: var(--vscode-editor-background, #1e1e1e);
           color: var(--vscode-editor-foreground, #d4d4d4);
-          padding: 16px 18px 12px 18px;
+          padding: 12px;
           margin: 0;
         }
-        h2 {
-          margin-top: 0;
-          margin-bottom: 18px;
-          font-size: 1.3em;
-          color: var(--vscode-sideBarTitle-foreground, #fff);
-          letter-spacing: 0.5px;
+        .container {
+          max-width: 100%;
+          margin: 0 auto;
+          padding: 0 8px;
         }
         .input-row {
           display: flex;
-          gap: 8px;
-          margin-bottom: 12px;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 8px;
         }
         .button-row {
           display: flex;
-          justify-content: flex-end;
-          margin-bottom: 18px;
+          justify-content: center;
+          margin-bottom: 16px;
+          width: 100%;
         }
         #taskInput {
           flex: 1;
-          padding: 8px 12px;
-          border-radius: 6px;
+          height: 28px;
+          padding: 0 8px;
+          border-radius: 4px;
           border: 1px solid var(--vscode-input-border, #333);
           background: var(--vscode-input-background, #232323);
           color: var(--vscode-input-foreground, #fff);
-          font-size: 1em;
+          font-size: 13px;
           outline: none;
           transition: border 0.2s;
         }
         #taskInput:focus {
-          border: 1.5px solid var(--vscode-focusBorder, #0078d4);
+          border: 1px solid var(--vscode-focusBorder, #0078d4);
         }
         #addBtn, #clearAllBtn {
+          height: 28px;
+          padding: 0 12px;
+          border: none;
+          border-radius: 4px;
+          font-size: 13px;
+          cursor: pointer;
+          transition: background 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 60px;
           background: var(--vscode-button-background, #0e639c);
           color: var(--vscode-button-foreground, #fff);
-          border: none;
-          border-radius: 6px;
-          padding: 8px 18px;
-          font-size: 1em;
-          cursor: pointer;
-          transition: background 0.2s, box-shadow 0.2s;
-          box-shadow: 0 1px 2px rgba(0,0,0,0.08);
         }
         #clearAllBtn {
-          background: var(--vscode-button-secondaryBackground, #8B0000);
           width: 100%;
+          background: var(--vscode-button-secondaryBackground, #8B0000);
         }
         #addBtn:hover {
           background: var(--vscode-button-hoverBackground, #1177bb);
@@ -364,10 +369,10 @@ class DoNestViewProvider {
           gap: 8px;
           background: var(--vscode-list-inactiveSelectionBackground, #222c37);
           color: var(--vscode-list-foreground, #fff);
-          border-radius: 6px;
-          padding: 8px 12px;
-          margin-bottom: 8px;
-          font-size: 1em;
+          border-radius: 4px;
+          padding: 6px 10px;
+          margin-bottom: 4px;
+          font-size: 13px;
           transition: background 0.2s;
         }
         .task-item:hover {
@@ -375,23 +380,31 @@ class DoNestViewProvider {
         }
         .task-icon {
           color: var(--vscode-icon-foreground, #c5c5c5);
-          font-size: 1.1em;
-          margin-right: 2px;
+          font-size: 14px;
         }
-        li{
+        .task-text {
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          line-height: 20px;
+        }
+        li {
           cursor: pointer;
         }
       </style>
     </head>
     <body>
-      <div class="input-row">
-        <input type="text" id="taskInput" placeholder="Add a task" autocomplete="off" />
-        <button id="addBtn">Add</button>
+      <div class="container">
+        <div class="input-row">
+          <input type="text" id="taskInput" placeholder="Add a task" autocomplete="off" />
+          <button id="addBtn">Add</button>
+        </div>
+        <div class="button-row">
+          <button id="clearAllBtn">Clear All</button>
+        </div>
+        <ul id="taskList"></ul>
       </div>
-      <div class="button-row">
-        <button id="clearAllBtn">Clear All</button>
-      </div>
-      <ul id="taskList"></ul>
       <script>
         const vscode = acquireVsCodeApi();
         
@@ -415,7 +428,7 @@ class DoNestViewProvider {
             message.tasks.forEach(task => {
               const li = document.createElement('li');
               li.className = 'task-item';
-              li.innerHTML = '<span class=task-icon>✔️</span> <span>'+task+'</span>';
+              li.innerHTML = '<span class="task-icon">✔️</span><span class="task-text">'+task+'</span>';
               li.onclick = function() {
                 vscode.postMessage({ command: 'openTask', text: task });
               };
