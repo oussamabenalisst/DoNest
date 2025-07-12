@@ -4,9 +4,10 @@
 
 A modern, elegant task management extension for Visual Studio Code.
 
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black.svg)](https://github.com/oussamabenalisst/DoNest)
 [![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
 [![Version](https://img.shields.io/badge/version-1.0.2-brightgreen.svg)](https://marketplace.visualstudio.com/items?itemName=oussamabenalisst.donest)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/license-MIT-red.svg)](https://opensource.org/licenses/MIT)
 
 <img src="images/icon1.png" alt="DoNest Banner" width="300"/>
 
