@@ -3,7 +3,7 @@
   "displayName": "DoNest",
   "publisher": "OussamaBenali",
   "description": "DoNest is your cozy, digital nest for tasks that matter. It's more than a to-do list—it's where your daily goals hatch into real achievements. Designed for clarity, speed, and focus, DoNest helps you build strong habits one tick at a time.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/oussamabenalisst/DoNest.git"
