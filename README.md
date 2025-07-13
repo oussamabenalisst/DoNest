@@ -40,7 +40,7 @@ DoNest transforms your VS Code workspace into a powerful task management environ
 <details>
 <summary>📋 Task Creation and Management</summary>
 <div align="center">
-<img src="images/task-creation.gif" alt="Task Creation Demo" width="600"/>
+<img src="images/addtask.gif" alt="Task Management Demo" width="600"/>
 </div>
 
 - One-click task creation
@@ -51,8 +51,7 @@ DoNest transforms your VS Code workspace into a powerful task management environ
 <details>
 <summary>✏️ Edit and Update</summary>
 <div align="center">
-<img src="images/edit-tasks.gif" alt="Edit Tasks Demo" width="600"/>
-</div>
+<img src="images/RemoveTask.gif" alt="Quick Editing Demo" width="600"/>
 
 - Quick rename functionality
 - Instant updates
@@ -62,8 +61,7 @@ DoNest transforms your VS Code workspace into a powerful task management environ
 <details>
 <summary>🗂️ File Navigation</summary>
 <div align="center">
-<img src="images/file-navigation.gif" alt="File Navigation Demo" width="600"/>
-</div>
+<img src="images/UAUI.gif" alt="Batch Operations Demo" width="600"/>
 
 - Click to open files
 - Smart file tracking
