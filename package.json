@@ -3,7 +3,7 @@
   "displayName": "DoNest",
   "publisher": "OussamaBenali",
   "description": "DoNest is your cozy, digital nest for tasks that matter. It's more than a to-do list—it's where your daily goals hatch into real achievements. Designed for clarity, speed, and focus, DoNest helps you build strong habits one tick at a time.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/oussamabenalisst/DoNest.git"
@@ -17,7 +17,26 @@
     "vscode": "^1.101.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Formatters",
+    "Snippets"
+  ],
+  "keywords": [
+    "todo",
+    "task",
+    "tasks",
+    "todo-list",
+    "task-management",
+    "productivity",
+    "organization",
+    "project-management",
+    "workflow",
+    "checklist",
+    "reminder",
+    "note",
+    "notes",
+    "file-association",
+    "workspace"
   ],
   "activationEvents": [],
   "main": "./extension.js",
